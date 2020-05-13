@@ -1,9 +1,12 @@
 'use strict'
 
+//requerimos doten donde estan las variables de entorno
 require('dotenv').config();
+//guiardamos el conector en una variable
 
 const mysql = require('mysql');
 
+//conexion
 const conexion = mysql.createConnection({
     connectionLimit: 10,
     host:process.env.SERVIDOR,
@@ -12,6 +15,7 @@ const conexion = mysql.createConnection({
     database:process.env.BBDD
 })
 
+//mostrar todos los usuarios
 const allUser = (callback) => {
     // conexion.connect();
     if(conexion){
@@ -24,6 +28,7 @@ const allUser = (callback) => {
     // conexion.end();
 }
 
+//añadir usuario
 const addUser = (user, callback) => {
     // conexion.connect();
     if(conexion){
@@ -36,6 +41,7 @@ const addUser = (user, callback) => {
     // conexion.end();
 }
 
+//loguear
 const login = (user, callback) => {
     // conexion.connect();
     if(conexion){
@@ -48,9 +54,24 @@ const login = (user, callback) => {
     // conexion.end();
 }
 
+//añadir video 
+const addVideo = (video, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`INSERT INTO video SET ?`, video, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }
+        })
+    }
+    // conexion.end();
+
+}
+
 module.exports = 
     {
         allUser,
         addUser,
-        login
+        login,
+        addVideo
     };

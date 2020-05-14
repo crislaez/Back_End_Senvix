@@ -25,7 +25,8 @@ function endPoint(app){
     });
     
     //ingresar usuarios ruta -> http://localhost:3001/api/addUser
-    router.post('/addUser', (req, res) => {
+    router.post('/addUser',multipartMiddleware, (req, res) => {
+        let aux = req.files.avatar.path.split('\\');
         let user = 
             {
                 id_usuario: '',
@@ -34,7 +35,8 @@ function endPoint(app){
                 nacimiento: req.body.nacimiento,
                 sexo: req.body.sexo,
                 correo: req.body.correo,
-                clave: req.body.clave   
+                clave: req.body.clave,
+                avatar: 'http://localhost:3001/video/'+aux[1],
             }
 
         Database.addUser(user, (err, data) => {
@@ -78,6 +80,51 @@ function endPoint(app){
             if(!data) return res.status(404).json({messaje: `error al ingresar el video`});
 
             res.status(200).json({success:true});
+        })
+    })
+
+    //mostrar videos por id de usuario rute -> http://localhost:3001/api/video/:id
+    router.get('/video/:id', (req, res) => {
+        let id_usuario = req.params.id;
+        Database.VideoById(id_usuario, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al mostrar los videos`});
+
+            res.status(200).json({success: true, data:data});
+        })
+    })
+
+    //mostrar usuario por id rute -> http://localhost:3001/api/user/:id
+    router.get('/user/:id', (req, res) => {
+        let id_usuario = req.params.id;
+
+        Database.UserById(id_usuario, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al mostrar el usuario`});
+
+            res.status(200).json({sucess:true, data:data});
+        })
+    })
+
+    //borrar video por id rute -> http://localhost:3001/api/deleteVideo/:id
+    router.delete('/deleteVideo/:id', (req, res) => {
+        let id_video = req.params.id;
+
+        Database.deleteVideo(id_video, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al mostrar el usuario`});
+
+            res.status(200).json({success:true, data:'Borrado'})
+        })
+    })
+
+    //mostrar todos los videos rute -> http://localhost:3001/api/allVideo
+    router.get('/allVideo', (req, res) => {
+        Database.allVideos( (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al mostrar los videos`});
+
+            res.status(200).json({sucess:true, data:data});
         })
     })
 

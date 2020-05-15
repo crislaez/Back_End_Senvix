@@ -22,6 +22,8 @@ const allUser = (callback) => {
         conexion.query(`SELECT * FROM usuarios`, ( err, res ) => {
             if(!err){
                 callback(null, res);
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -35,6 +37,8 @@ const addUser = (user, callback) => {
         conexion.query(`INSERT INTO usuarios SET ?`, user, (err, res) => {
             if(!err){
                 callback(null, res);
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -48,6 +52,8 @@ const login = (user, callback) => {
         conexion.query(`SELECT * FROM usuarios WHERE correo = ${conexion.escape(user.correo)} AND clave = ${conexion.escape(user.clave)}`, (err, res) => {
             if(!err){
                 callback(null, res);
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -61,19 +67,23 @@ const addVideo = (video, callback) => {
         conexion.query(`INSERT INTO video SET ?`, video, (err, res) => {
             if(!err){
                 callback(null, res);
+            }else{
+                console.log(err.code);
             }
         })
     }
     // conexion.end();
 }
 
-//todos los videos por usuario
-const VideoById = (id_usuario, callback) => {
+//todos los videos por id usuario
+const videoByIdUser = (id_usuario, callback) => {
     //conexion.connect();
     if(conexion){
         conexion.query(`SELECT * FROM video WHERE id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
             if(!err){
                 callback(null, res);
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -81,12 +91,14 @@ const VideoById = (id_usuario, callback) => {
 }
 
 //usuario por id
-const UserById = (id_usuario, callback) => {
+const userById = (id_usuario, callback) => {
     //conexion.connect();
     if(conexion){
         conexion.query(`SELECT * FROM usuarios WHERE id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
             if(!err){
                 callback(null, res)
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -100,6 +112,8 @@ const deleteVideo = (id_video, callback) => {
         conexion.query(`DELETE FROM video WHERE id_video = ${conexion.escape(id_video)}`, (err, res) => {
             if(!err){
                 callback(null, res)
+            }else{
+                console.log(err.code);
             }
         })
     }
@@ -113,11 +127,28 @@ const allVideos = (callback) => {
         conexion.query(`SELECT * FROM video`, (err, res) => {
             if(!err){
                 callback(null, res);
+            }else{
+                console.log(err.code);
             }
         })
     }
     // conexion.end();
 }
+
+//videos por id
+const videoById = (id_video, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE video.id_video = ${conexion.escape(id_video)}`, (err, res) => {
+            if(!err){
+                callback(null, res)
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+} 
 
 module.exports = 
     {
@@ -125,8 +156,9 @@ module.exports =
         addUser,
         login,
         addVideo,
-        VideoById,
-        UserById,
+        videoByIdUser,
+        userById,
         deleteVideo,
-        allVideos
+        allVideos,
+        videoById
     };

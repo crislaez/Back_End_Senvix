@@ -86,7 +86,7 @@ function endPoint(app){
     //mostrar videos por id de usuario rute -> http://localhost:3001/api/video/:id
     router.get('/video/:id', (req, res) => {
         let id_usuario = req.params.id;
-        Database.VideoById(id_usuario, (err, data) => {
+        Database.videoByIdUser(id_usuario, (err, data) => {
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al mostrar los videos`});
 
@@ -98,7 +98,7 @@ function endPoint(app){
     router.get('/user/:id', (req, res) => {
         let id_usuario = req.params.id;
 
-        Database.UserById(id_usuario, (err, data) => {
+        Database.userById(id_usuario, (err, data) => {
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al mostrar el usuario`});
 
@@ -125,6 +125,18 @@ function endPoint(app){
             if(!data) return res.status(404).json({messaje: `error al mostrar los videos`});
 
             res.status(200).json({sucess:true, data:data});
+        })
+    })
+
+    //mostramos video por id rute -> http://localhost:3001/api/getVideo/:id
+    router.get('/getVideo/:id', (req, res) => {
+        let id_video = req.params.id;
+
+        Database.videoById(id_video, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al mostrar el video`});
+
+            res.status(200).json({success:true, data:data})
         })
     })
 

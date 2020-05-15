@@ -27,6 +27,7 @@ function endPoint(app){
     //ingresar usuarios ruta -> http://localhost:3001/api/addUser
     router.post('/addUser',multipartMiddleware, (req, res) => {
         let aux = req.files.avatar.path.split('\\');
+        let aux2 = req.files.banner.path.split('\\');
         let user = 
             {
                 id_usuario: '',
@@ -37,6 +38,7 @@ function endPoint(app){
                 correo: req.body.correo,
                 clave: req.body.clave,
                 avatar: 'http://localhost:3001/video/'+aux[1],
+                banner: 'http://localhost:3001/video/'+aux2[1],
             }
 
         Database.addUser(user, (err, data) => {
@@ -79,7 +81,7 @@ function endPoint(app){
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al ingresar el video`});
 
-            res.status(200).json({success:true});
+            res.status(200).json({success:true, data:data});
         })
     })
 
@@ -136,10 +138,27 @@ function endPoint(app){
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al mostrar el video`});
 
-            res.status(200).json({success:true, data:data})
+            res.status(200).json({success:true, data:data});
         })
     })
 
+    //añadir comentarios rute -> http://localhost:3001/api/addComent
+    router.post('/addComent', (req, res) => {
+        let coment = 
+            {
+                id_video: req.body.id_video,
+                id_comentario: '',
+                comentario: req.body.comentario,
+                usuario: req.body.usuario
+            }
+
+        Database.addComent(coment, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al agregar el comentario`});
+
+            res.status(200).json({suces:true, data:data});
+        })
+    })
 }
 
 module.exports = endPoint;

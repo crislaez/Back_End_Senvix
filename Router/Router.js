@@ -83,7 +83,7 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
-    })
+    });
 
     //mostrar videos por id de usuario rute -> http://localhost:3001/api/video/:id
     router.get('/video/:id', (req, res) => {
@@ -94,7 +94,7 @@ function endPoint(app){
 
             res.status(200).json({success: true, data:data});
         })
-    })
+    });
 
     //mostrar usuario por id rute -> http://localhost:3001/api/user/:id
     router.get('/user/:id', (req, res) => {
@@ -106,7 +106,7 @@ function endPoint(app){
 
             res.status(200).json({sucess:true, data:data});
         })
-    })
+    });
 
     //borrar video por id rute -> http://localhost:3001/api/deleteVideo/:id
     router.delete('/deleteVideo/:id', (req, res) => {
@@ -118,7 +118,7 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:'Borrado'})
         })
-    })
+    });
 
     //mostrar todos los videos rute -> http://localhost:3001/api/allVideo
     router.get('/allVideo', (req, res) => {
@@ -128,7 +128,7 @@ function endPoint(app){
 
             res.status(200).json({sucess:true, data:data});
         })
-    })
+    });
 
     //mostramos video por id rute -> http://localhost:3001/api/getVideo/:id
     router.get('/getVideo/:id', (req, res) => {
@@ -140,7 +140,7 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
-    })
+    });
 
     //añadir comentarios rute -> http://localhost:3001/api/addComent
     router.post('/addComent', (req, res) => {
@@ -156,7 +156,31 @@ function endPoint(app){
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al agregar el comentario`});
 
-            res.status(200).json({suces:true, data:data});
+            res.status(200).json({success:true, data:data});
+        })
+    });
+
+    //ver todos los comentarios por id rute -> http://localhost:3001/api/getComent/:id
+    router.get('/getComent/:id', (req, res) => {
+        let id_video = req.params.id;
+
+        Database.comentByIdVideo(id_video, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al agregar el comentario`});
+            
+            res.status(200).json({success:true, data:data});
+        })
+    });
+    
+    //mostrar todos los videos por el nombre de usuario para el buscador http://localhost:3001/api/getVideoName/:id
+    router.get('/getVideoName/:id', (req, res) => {
+        let nombre = req.params.id;
+
+        Database.videoByNameUser(nombre, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al buscar los videos`});
+
+            res.status(200).json({success:true, data:data});
         })
     })
 }

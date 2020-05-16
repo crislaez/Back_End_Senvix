@@ -79,7 +79,7 @@ const addVideo = (video, callback) => {
 const videoByIdUser = (id_usuario, callback) => {
     //conexion.connect();
     if(conexion){
-        conexion.query(`SELECT * FROM video WHERE id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
+        conexion.query(`SELECT * FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE video.id_usuario = ${conexion.escape(id_usuario)}`, (err, res) => {
             if(!err){
                 callback(null, res);
             }else{
@@ -122,9 +122,10 @@ const deleteVideo = (id_video, callback) => {
 
 //mostrar todos los videos
 const allVideos = (callback) => {
-    // conexion.connect();
+    // conexion.connect();SELECT * FROM video
+    // SELECT * FROM video
     if(conexion){
-        conexion.query(`SELECT * FROM video`, (err, res) => {
+        conexion.query(`SELECT * FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario`, (err, res) => {
             if(!err){
                 callback(null, res);
             }else{
@@ -165,6 +166,36 @@ const addComent = (coment, callback) => {
     // conexion.end();
 }
 
+//mostrar todos los mesajes por video
+const comentByIdVideo = (id_video, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM comentario WHERE id_video = ${conexion.escape(id_video)}`, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//buscar videos por nombre de usuario
+const videoByNameUser = (nombre, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT id_video, video, titulo_video, nombre, avatar, banner FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE usuarios.nombre = ${conexion.escape(nombre)}`, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         allUser,
@@ -176,5 +207,7 @@ module.exports =
         deleteVideo,
         allVideos,
         videoById,
-        addComent
+        addComent,
+        comentByIdVideo,
+        videoByNameUser
     };

@@ -1,14 +1,14 @@
 
 ## (back-end) SENVIX
 
-Senvix es una red social de subir videos
+Senvix es una red social de subir videos (node.js, express, mysql)
 
 <img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto.PNG" />
-<hr>
+
 <img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_2.PNG" />
-<hr>
+
 <img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_3.PNG" />
-<hr>
+
 <img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_4.PNG" />
 
 ### Que hace el proyecto

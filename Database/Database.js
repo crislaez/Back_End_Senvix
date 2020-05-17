@@ -15,6 +15,7 @@ const conexion = mysql.createConnection({
     database:process.env.BBDD
 })
 
+
 //mostrar todos los usuarios
 const allUser = (callback) => {
     // conexion.connect();

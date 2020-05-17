@@ -9,7 +9,7 @@ Senvix es una red social de subir videos
 
 ### Que hace el proyecto
 
-Una red social donde se peuden subir videos, comentarlos, ver los perfiles de los usuarios....
+Una red social donde se pueden subir videos, comentarlos, ver los perfiles de los usuarios....
  
 ### Donde puedne recibir ayuda los usuarios con el proyecto
  
@@ -17,4 +17,4 @@ Escribiendome a mi correo crislaez30@gmail.com
 
 ### Quien mantiene y construye el proyecto
 
-Yo mismo, y con muchisima ilusion
+Yo mismo, y con muchisima ilusión

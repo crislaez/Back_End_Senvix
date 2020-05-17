@@ -182,7 +182,7 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
-    })
+    });
 }
 
 module.exports = endPoint;

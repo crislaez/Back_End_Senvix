@@ -11,7 +11,7 @@ const endPoint = require('./Router/Router');
 const app = express();
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
-
+const router = express.Router();
 //para poder coger la ruta de la carpeta htt://localhost:3001/video/nombrefoto.jpg
 app.use('/video', express.static(__dirname + '/video', {
     maxAge: '12h'
@@ -28,6 +28,8 @@ app.use((req, res, next) => {
 
 //activamos la funcion donde estan todas las rutas endpoint
 endPoint(app);
+
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Api rest corriendo en http://${process.env.SERVIDOR}:${process.env.PORT}`)

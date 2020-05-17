@@ -3,13 +3,13 @@
 
 Senvix es una red social de subir videos
 
-<img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto.PNG" />
+<img width="40%" height="300" float="left" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto.PNG" />
+
+<img width="40%" height="300" float="left" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_2.PNG" />
 <hr>
-<img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_2.PNG" />
-<hr>
-<img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_3.PNG" />
-<hr>
-<img width="40%" height="300" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_4.PNG" />
+<img width="40%" height="300" float="left" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_3.PNG" />
+
+<img width="40%" height="300" float="left" src="https://github.com/crislaez/Fornt_End_Senvix/blob/master/src/img/foto_proyecto_4.PNG" />
 
 ### Que hace el proyecto
 

@@ -13,7 +13,7 @@ const conexion = mysql.createConnection({
     user:process.env.USUARIO,
     password:process.env.CLAVE,
     database:process.env.BBDD
-})
+});
 
 
 //mostrar todos los usuarios
@@ -29,7 +29,7 @@ const allUser = (callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //añadir usuario
 const addUser = (user, callback) => {
@@ -44,7 +44,7 @@ const addUser = (user, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //loguear
 const login = (user, callback) => {
@@ -59,7 +59,7 @@ const login = (user, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //añadir video 
 const addVideo = (video, callback) => {
@@ -74,7 +74,7 @@ const addVideo = (video, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //todos los videos por id usuario
 const videoByIdUser = (id_usuario, callback) => {
@@ -89,7 +89,7 @@ const videoByIdUser = (id_usuario, callback) => {
         })
     }
     //conexion.end();    
-}
+};
 
 //usuario por id
 const userById = (id_usuario, callback) => {
@@ -104,7 +104,7 @@ const userById = (id_usuario, callback) => {
         })
     }
     //conexion.end();
-}
+};
 
 //borrar video
 const deleteVideo = (id_video, callback) => {
@@ -119,7 +119,7 @@ const deleteVideo = (id_video, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //mostrar todos los videos
 const allVideos = (callback) => {
@@ -135,7 +135,7 @@ const allVideos = (callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //videos por id
 const videoById = (id_video, callback) => {
@@ -150,7 +150,7 @@ const videoById = (id_video, callback) => {
         })
     }
     // conexion.end();
-} 
+};
 
 //añadir comentario
 const addComent = (coment, callback) => {
@@ -165,7 +165,7 @@ const addComent = (coment, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //mostrar todos los mesajes por video
 const comentByIdVideo = (id_video, callback) => {
@@ -180,13 +180,55 @@ const comentByIdVideo = (id_video, callback) => {
         })
     }
     // conexion.end();
-}
+};
 
 //buscar videos por nombre de usuario
 const videoByNameUser = (nombre, callback) => {
     // conexion.connect();
     if(conexion){
-        conexion.query(`SELECT id_video, video, titulo_video, nombre, avatar, banner FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE usuarios.nombre = ${conexion.escape(nombre)}`, (err, res) => {
+        conexion.query(`SELECT id_video, usuarios.id_usuario, video, titulo_video, nombre, avatar, banner FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE usuarios.nombre =${conexion.escape(nombre)}`, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+};
+
+const checkFollow = (datos, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM seguir WHERE id_usuario_seguido = ${conexion.escape(datos.seguido)} AND id_usuario_seguidor = ${conexion.escape(datos.seguidor)}`, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+};
+
+const follow = (datos, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`INSERT INTO seguir SET ?`,datos , (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+};
+
+const unFollow = (datos, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`DELETE FROM seguir WHERE id_usuario_seguido = ${conexion.escape(datos.seguido)} AND id_usuario_seguidor = ${conexion.escape(datos.seguidor)}`, (err, res) => {
             if(!err){
                 callback(null, res);
             }else{
@@ -210,5 +252,8 @@ module.exports =
         videoById,
         addComent,
         comentByIdVideo,
-        videoByNameUser
+        videoByNameUser,
+        checkFollow,
+        follow,
+        unFollow
     };

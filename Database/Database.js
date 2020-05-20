@@ -254,6 +254,20 @@ const getFolowers = (id, callback) => {
     // conexion.end();
 }
 
+const userByIdLimit = (id,callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT id_usuario, nombre, avatar FROM usuarios WHERE id_usuario = ${conexion.escape(id)}`, (err, res) => {
+            if(!err){
+                callback(null, res)
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         allUser,
@@ -271,5 +285,6 @@ module.exports =
         checkFollow,
         follow,
         unFollow,
-        getFolowers
+        getFolowers,
+        userByIdLimit
     };

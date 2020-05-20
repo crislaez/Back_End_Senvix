@@ -233,7 +233,7 @@ function endPoint(app){
         })
     })
 
-    //conseguir todas las personas que un usuario sigue tue -> http://localhost:3001/api/getFolowers/id
+    //conseguir todas las personas que un usuario sigue rute -> http://localhost:3001/api/getFolowers/id
     router.get('/getFolowers/:id', (req, res) => {
         let id = req.params.id;
 
@@ -243,6 +243,19 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
+    })
+
+    //usuario por id pero limitando los datos  rute -> http://localhost:3001/api/userByIdLimit/id
+    router.get('/userByIdLimit/:id', (req, res) => {
+        let id = req.params.id;
+
+        Database.userByIdLimit(id, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al recibir los datos`});
+
+            res.status(200).json({success:true, data:data});
+        })
+
     })
 }
 

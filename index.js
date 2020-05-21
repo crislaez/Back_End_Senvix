@@ -29,7 +29,6 @@ app.use((req, res, next) => {
 //activamos la funcion donde estan todas las rutas endpoint
 endPoint(app);
 
-
 app.listen(process.env.PORT, () => {
     console.log(`Api rest corriendo en http://${process.env.SERVIDOR}:${process.env.PORT}`)
 })

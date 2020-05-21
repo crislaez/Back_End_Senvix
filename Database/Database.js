@@ -268,6 +268,34 @@ const userByIdLimit = (id,callback) => {
     // conexion.end();
 }
 
+const addChat = (chat,callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`INSERT INTO chat SET ?`,chat, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+const getChatUsers = (data, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM chat WHERE id_usuario_uno = ${conexion.escape(data.id_usuario_uno)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_dos)}`, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         allUser,
@@ -286,5 +314,7 @@ module.exports =
         follow,
         unFollow,
         getFolowers,
-        userByIdLimit
+        userByIdLimit,
+        addChat,
+        getChatUsers
     };

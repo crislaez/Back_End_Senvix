@@ -231,7 +231,7 @@ function endPoint(app){
 
             res.status(200).json({success:true})
         })
-    })
+    });
 
     //conseguir todas las personas que un usuario sigue rute -> http://localhost:3001/api/getFolowers/id
     router.get('/getFolowers/:id', (req, res) => {
@@ -243,7 +243,7 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
-    })
+    });
 
     //usuario por id pero limitando los datos  rute -> http://localhost:3001/api/userByIdLimit/id
     router.get('/userByIdLimit/:id', (req, res) => {
@@ -255,7 +255,40 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
+    });
 
+    //agregamos los mensajes del chat rute->http://localhost:3001/api/addChat
+    router.post('/addChat', (req, res) => {
+        let chat = 
+            {   
+                id_chat:'',
+                id_usuario_uno:req.body.id_usuario_uno,
+                id_usuario_dos:req.body.id_usuario_dos,
+                mensaje_chat:req.body.mensaje_chat
+            };
+        
+        Database.addChat(chat, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al guardar el mensaje`});
+
+            res.status(200).json({success:true, data:data});
+        })
+    });
+
+    //mostramos el chat por lños 2 usuarios rute->http://localhost:3001/api/getChatUsers
+    router.post('/getChatUsers', (req, res) => {
+        let dato = 
+            {
+                id_usuario_uno:req.body.id_usuario_uno,
+                id_usuario_dos:req.body.id_usuario_dos
+            };
+
+        Database.getChatUsers(dato, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al recuperar los mensaje`});
+
+            res.status(200).json({success:true, data:data});
+        })
     })
 }
 

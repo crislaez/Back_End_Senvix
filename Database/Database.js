@@ -183,10 +183,10 @@ const comentByIdVideo = (id_video, callback) => {
 };
 
 //buscar videos por nombre de usuario
-const videoByNameUser = (nombre, callback) => {
+const videoByNameUser = (id_usuario, callback) => {
     // conexion.connect();
     if(conexion){
-        conexion.query(`SELECT id_video, usuarios.id_usuario, video, titulo_video, nombre, avatar, banner FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE usuarios.nombre =${conexion.escape(nombre)}`, (err, res) => {
+        conexion.query(`SELECT id_video, usuarios.id_usuario, video, titulo_video, nombre, avatar, banner FROM video INNER JOIN usuarios ON video.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario =${conexion.escape(id_usuario)}`, (err, res) => {
             if(!err){
                 callback(null, res);
             }else{
@@ -296,6 +296,20 @@ const getChatUsers = (data, callback) => {
     // conexion.end();
 }
 
+const getUserByName = (name, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT id_usuario, nombre, avatar  FROM usuarios WHERE nombre = ${conexion.escape(name)}`,(err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 module.exports = 
     {
         allUser,
@@ -316,5 +330,6 @@ module.exports =
         getFolowers,
         userByIdLimit,
         addChat,
-        getChatUsers
+        getChatUsers,
+        getUserByName
     };

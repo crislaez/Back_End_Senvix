@@ -174,9 +174,9 @@ function endPoint(app){
     
     //mostrar todos los videos por el nombre de usuario para el buscador http://localhost:3001/api/getVideoName/:id
     router.get('/getVideoName/:id', (req, res) => {
-        let nombre = req.params.id;
+        let id_usuario = req.params.id;
 
-        Database.videoByNameUser(nombre, (err, data) => {
+        Database.videoByNameUser(id_usuario, (err, data) => {
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al buscar los videos`});
 
@@ -286,6 +286,18 @@ function endPoint(app){
         Database.getChatUsers(dato, (err, data) => {
             if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
             if(!data) return res.status(404).json({messaje: `error al recuperar los mensaje`});
+
+            res.status(200).json({success:true, data:data});
+        })
+    });
+
+    // conseguir usuarios por nombre rute->http://localhost:3001/api/getUserByName/:id
+    router.get('/getUserByName/:id',(req, res) => {
+        let name = req.params.id;
+
+        Database.getUserByName(name, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al recuperar el usuario`});
 
             res.status(200).json({success:true, data:data});
         })

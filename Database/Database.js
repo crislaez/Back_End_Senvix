@@ -285,7 +285,7 @@ const addChat = (chat,callback) => {
 const getChatUsers = (data, callback) => {
     // conexion.connect();
     if(conexion){
-        conexion.query(`SELECT * FROM chat WHERE id_usuario_uno = ${conexion.escape(data.id_usuario_uno)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_dos)}`, (err, res) => {
+        conexion.query(`SELECT * FROM chat WHERE id_usuario_uno = ${conexion.escape(data.id_usuario_uno)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_dos)} OR id_usuario_uno = ${conexion.escape(data.id_usuario_dos)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_uno)}`, (err, res) => {
             if(!err){
                 callback(null, res);
             }else{

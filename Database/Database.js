@@ -1,20 +1,7 @@
 'use strict'
 
-//requerimos doten donde estan las variables de entorno
-require('dotenv').config();
-//guiardamos el conector en una variable
-
-const mysql = require('mysql');
-
 //conexion
-const conexion = mysql.createConnection({
-    connectionLimit: 10,
-    host:process.env.SERVIDOR,
-    user:process.env.USUARIO,
-    password:process.env.CLAVE,
-    database:process.env.BBDD
-});
-
+const conexion = require('./Conexion');
 
 //mostrar todos los usuarios
 const allUser = (callback) => {
@@ -284,7 +271,7 @@ const addChat = (chat,callback) => {
 
 const getChatUsers = (data, callback) => {
     // conexion.connect();
-    if(conexion){
+    if(conexion){//ORDER by ID DESC LIMIT 1
         conexion.query(`SELECT * FROM chat WHERE id_usuario_uno = ${conexion.escape(data.id_usuario_uno)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_dos)} OR id_usuario_uno = ${conexion.escape(data.id_usuario_dos)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_uno)}`, (err, res) => {
             if(!err){
                 callback(null, res);
@@ -310,6 +297,35 @@ const getUserByName = (name, callback) => {
     // conexion.end();
 }
 
+const deleteChat = (id, callback) => {
+    // conexion.connect();
+    if(conexion){//DELETE FROM seguir WHERE id_usuario_seguido
+        conexion.query(`DELETE FROM chat WHERE id_chat = ${conexion.escape(id)}`, (err, res) => {
+            if(!err){
+                callback(null, res);                
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+const lastMessageChat = (data, callback) => {
+    // conexion.connect();
+    if(conexion){
+        conexion.query(`SELECT * FROM chat WHERE id_usuario_uno = ${conexion.escape(data.id_usuario_uno)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_dos)} OR id_usuario_uno = ${conexion.escape(data.id_usuario_dos)} AND id_usuario_dos = ${conexion.escape(data.id_usuario_uno)} ORDER by id_chat DESC LIMIT 1`, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
+//SELECT * FROM chat WHERE id_usuario_uno = 3 AND id_usuario_dos = 10 OR id_usuario_uno = 10 AND id_usuario_dos = 3 ORDER by id_chat DESC LIMIT 1
 module.exports = 
     {
         allUser,
@@ -331,5 +347,7 @@ module.exports =
         userByIdLimit,
         addChat,
         getChatUsers,
-        getUserByName
+        getUserByName,
+        deleteChat,
+        lastMessageChat
     };

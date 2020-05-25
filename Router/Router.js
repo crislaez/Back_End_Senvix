@@ -301,6 +301,34 @@ function endPoint(app){
 
             res.status(200).json({success:true, data:data});
         })
+    });
+
+    //para borrar los mensajes del chat rute->http://localhost:3001/api/deleteChat/:id
+    router.delete('/deleteChat/:id', (req, res) => {
+        let id_chat = req.params.id;
+
+        Database.deleteChat(id_chat, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al borrar el mensaje`});
+
+            res.status(200).json({success:true});
+        })
+    });
+
+    //para saber el ultimo mensaje entre 2 usuarios  rute->http://localhost:3001/api/lastMessageChat
+    router.post('/lastMessageChat', (req, res) => {
+        let data = 
+            {
+                id_usuario_uno:req.body.id_usuario_uno,
+                id_usuario_dos:req.body.id_usuario_dos
+            };
+
+        Database.lastMessageChat(data, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al borrar el mensaje`});
+
+            res.status(200).json({success:true, data:data});
+        })
     })
 }
 

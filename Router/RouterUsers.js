@@ -94,6 +94,26 @@ function endPointUsers(router){
             res.status(200).json({success:true, data:data});
         })
     });
+
+    //modificar foto de perfil y banner rute->http://localhost:3001/api/updateFilesUser/:id
+    router.put('/updateFilesUser/:id',multipartMiddleware, (req, res) => {
+        let aux = req.files.avatar.path.split('\\');
+        let aux2 = req.files.banner.path.split('\\');
+
+        let usuario = 
+            {
+                id_usuario:req.params.id,
+                avatar: 'http://localhost:3001/video/'+aux[1],
+                banner: 'http://localhost:3001/video/'+aux2[1],
+            };
+
+        Database.updateFilesUser(usuario, (err, data) => {
+            if(err) return res.status(500).json({messaje: `Error al realizar la peticion:${err}`});
+            if(!data) return res.status(404).json({messaje: `error al actualiza el usuario`});
+
+            res.status(200).json({success:true});
+        })
+    })
 }
 
 module.exports = endPointUsers;

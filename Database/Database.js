@@ -325,6 +325,27 @@ const lastMessageChat = (data, callback) => {
     // conexion.end();
 }
 
+const updateFilesUser = (user, callback) => {
+    // conexion.connect();
+    const sql = 
+        `UPDATE usuarios SET
+        avatar = ${conexion.escape(user.avatar)},
+        banner = ${conexion.escape(user.banner)}
+        WHERE id_usuario = ${conexion.escape(user.id_usuario)}
+        `;
+
+    if(conexion){
+        conexion.query(sql, (err, res) => {
+            if(!err){
+                callback(null, res);
+            }else{
+                console.log(err.code);
+            }
+        })
+    }
+    // conexion.end();
+}
+
 //SELECT * FROM chat WHERE id_usuario_uno = 3 AND id_usuario_dos = 10 OR id_usuario_uno = 10 AND id_usuario_dos = 3 ORDER by id_chat DESC LIMIT 1
 module.exports = 
     {
@@ -349,5 +370,6 @@ module.exports =
         getChatUsers,
         getUserByName,
         deleteChat,
-        lastMessageChat
+        lastMessageChat,
+        updateFilesUser
     };

@@ -21,7 +21,7 @@ Senvix es una red social de subir videos (Node.js, express, Mysql)
 
 ### Que hace el proyecto
 
-Una red social donde se pueden subir videos, comentarlos, ver los perfiles de los usuarios....
+Una red social donde se pueden subir videos, comentarlos, buscar y seguir a otros usuarios, chat privado...
  
 ### Donde pueden recibir ayuda los usuarios con el proyecto
  
